@@ -1,7 +1,8 @@
-import { serve } from "https://deno.land/x/sift@0.3.4/mod.ts";
+import { serve, serveStatic } from "https://deno.land/x/sift@0.3.4/mod.ts";
 
 serve({
-  "/": () => new Response("hello world"),
+  "/": serveStatic("web/index.html", { baseUrl: import.meta.url }),
+  "/assets/:filename+": serveStatic("web/assets", { baseUrl: import.meta.url }),
   "/blog/:slug": (request, params) => {
     const post = `Hello, you visited ${params.slug}!`;
     return new Response(post);
